@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h2>Log In!!!</h2>
+    <form action="{{ url_for('auth.login') }}" method="post">
+        <div><label>Email: <input type="email" name="email" required/></label></div>
+        <div><label>Password: <input type="password" name="password" required/></label></div>
+        <div>
+          <button class="btn waves-effect waves-light" type="submit" name="action" value="Sign Up">Submit
+            <i class="material-icons right">send</i>
+          </button>
+        </div>
+    </form>
+    {% with messages = get_flashed_messages() %}
+        {% for message in messages %}
+            <div class="notif" style="color:red">{{ message }}</div>
+        {% endfor %}
+    {% endwith %}
+
+    <h5>Or <a href="{{url_for('auth.signup')}}">sign up</a> if you haven't</h5>
+
+{% endblock %}
