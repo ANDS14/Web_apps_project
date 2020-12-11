@@ -15,7 +15,7 @@ def create_app(test_config=None):
     app.config["SECRET_KEY"] = b"\x8c\xa5\x04\xb3\x8f\xa1<\xef\x9bY\xca/*\xff\x12\xfb"
     app.config[
         "SQLALCHEMY_DATABASE_URI"
-    ] = "mysql+mysqldb://burritoSurvey:burrito@localhost/BurritoSurvey"
+    ] = "mysql+mysqldb://burrito:burrito@178.62.251.215/BurritoSurvey"
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.init_app(app)
 
