@@ -14,11 +14,7 @@ from datetime import datetime as dt
 
 bp = Blueprint("main", __name__)
 
-'''
 
-ESTO LO HE ACABADO DE CAMBIAR! =D
-
-'''
 
 @bp.route("/")
 @flask_login.login_required
