@@ -11,10 +11,11 @@ bp = Blueprint("auth", __name__)
 
 @bp.route("/login", methods=['GET'])
 def login():
+    form=LogIn()
     if current_user.is_authenticated:
         return redirect(url_for("main.index"))
 
-    return render_template("auth/login.html",form=LogIn())
+    return render_template("auth/login.html",form=form)
 
 @bp.route("/login", methods=['POST'])
 def login_post():
@@ -45,18 +46,18 @@ def signup():
 
     if not form.validate_on_submit():
         print("Unvalidated!")
-        return render_template("auth/signup.html",form = SignUp())
+        return render_template("auth/signup.html",form = form)
 
     # Check that passwords are equal
     if password != request.form.get("password_repeat"):
         flash("Sorry, passwords are different", 'warning')
-        return render_template("auth/signup.html",form=SignUp()) #redirect(url_for("auth.signup"))
+        return render_template("auth/signup.html",form=form) #redirect(url_for("auth.signup"))
 
     # Check if the email is already at the database
     user = model.User.query.filter_by(email=email).first()
     if user:
         flash("Sorry, the email you provided is already registered", 'warning')
-        return render_template("auth/signup.html",form=SignUp()) #redirect(url_for("auth.signup"))
+        return render_template("auth/signup.html",form=form) #redirect(url_for("auth.signup"))
 
     #If none of the above conditions are met then the new user is created:
     password_hash = bcrypt.generate_password_hash(password).decode("utf-8")
