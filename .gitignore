@@ -56,6 +56,6 @@ Thumbs.db
 *.grib
 *.nc
 
-#Generated exports
-export_results/
+#temporary directories
 temp/
+TEMP/
