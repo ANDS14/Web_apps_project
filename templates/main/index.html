@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div id="main_surveys_view">
+    <h4 class="center">Your Surveys:</h4>
+    <div class="divider"></div>
+    {% include 'surveys_template.html' %}
+    <!-- <div class="divider" style="margin-top:50px"></div> -->
+    <!-- <h5 class="center">Other surveys you might be interested in:</h5>
+      {%set others=True%}
+      {% include 'surveys_template.html' %} -->
+  </div>
+  <div class="create_survey-btn fixed-action-btn">
+    <a id="new_survey_a" class="btn-floating btn-large hoverable blue darken-3" href="javascript:void(0)"> <!--pulse-->
+      <i id = "create_survey_icon" class="large material-icons">poll</i>
+    </a>
+    <ul>
+      <!-- <li><a class="btn-floating red"><i class="material-icons">mode_edit</i></a></li>
+      <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li> -->
+    </ul>
+  </div>
+{% include 'create_survey_template.html' %}
+{% endblock %}

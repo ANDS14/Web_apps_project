@@ -1,0 +1,228 @@
+body {
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
+
+main {
+	flex: 1 0 auto;
+}
+
+footer .container {
+	margin-left: 5%;
+}
+
+.bootstrap{
+	//bootstrap css framework styles
+	//All divs inside this class will use bootstrap's styles
+	//Inspired from:
+	//https://medium.com/@romeo/how-to-combine-multiple-css-frameworks-into-the-same-page-9705221b0c1c
+
+	@import url('/cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css');
+
+}
+
+.main_block {
+	margin-left: 2.5%;
+}
+
+.user-dropdown{
+	font-size:0 !important;
+}
+
+.dropdown-menu {
+	display: none;
+}
+
+.dropdown-menu li {
+	opacity: 0.7;
+}
+
+.dropdown:hover .dropdown-menu {
+	display: block;
+	cursor:pointer;
+	position: absolute;
+	right: 0px;
+	z-index: 9999;
+}
+.dropdown-menu a{
+	width:150px;
+}
+
+.dropdown-menu i{
+	font-size: 20px !important;
+}
+
+.surveys-list-main{
+	max-width:650px;
+	margin:auto;
+	padding:15px;
+}
+
+.survey-content{
+	width:100%;
+	height:100%;
+	margin:0;
+	padding:0;
+}
+
+.survey-card-actions{
+	/* padding: 0 !important; */
+}
+
+.survey-card-actions i{
+	margin: auto !important;
+	width: 12%;
+}
+.expand-icon{
+	/* position:absolute !important; */
+	margin:0 !important;
+	padding:0 !important;
+}
+
+#main_surveys_view{
+	background-color: rgba(255,255,255,0.5) !important;
+}
+
+.navigation-bar a, .page-footer p{
+	color:#006400 !important;
+}
+
+.survey-info{
+	margin: 7px;
+	font-size:.75em !important;
+}
+
+.survey-info i{
+	font-size: 1.4rem !important;
+}
+
+.icon-text{
+	line-height:28px;
+	margin:0 ;
+	padding: 0;
+}
+
+.survey-header i{
+	font-size: 2.1rem !important;
+}
+
+.txt-icon{
+	display: inline-flex;
+  vertical-align: top;
+	margin-left: 2px !important;
+	margin-right: 5px !important;
+	padding: 0 !important;
+}
+
+.state-info i{
+	/* color: darkgrey !important; */
+}
+
+.create_survey-btn{
+	z-index:100;
+}
+
+.new_survey_container{
+	/* blurry background effect*/
+	position: fixed;
+	display:none;
+	width: 100%;
+	height: 100%;
+	top:0; bottom: 0;
+	left:0; right: 0;
+	background-color: rgba(255,255,255,0.6) !important;
+	z-index: 100;
+}
+
+#new_survey{
+	position: fixed;
+	width: 70vw;
+  height: 96vh;
+  left: 15vw;top: 2vh;
+	align-items: center;
+}
+#create_survey_card{
+	max-width: 750px;
+	max-height: 850px;
+	height: 100% !important;
+	margin: auto;
+	margin-top:0;
+}
+
+.login-img{
+	display: block;
+	height: 100% !important;
+	width: 100%  !important;
+	object-fit:cover;
+	margin-top: 20%;
+
+}
+
+.parent-row{
+	height: 70vh !important;
+	width: 80vw !important;
+	display: flex;
+	flex-wrap: wrap;
+	max-height:720px;
+
+}
+
+#wrap-button{
+	display: inline-flex;
+}
+
+#first-survey-btn{
+	margin-top:25px;
+}
+
+.survey-name{
+	color:#ffc107;
+	text-align: center;
+	font-size: 1.5rem !important;
+}
+
+.content-section {
+  background: #FFFFFF;
+  padding: 10px 20px;
+  border: 2px solid #dddddd;
+  padding-bottom: 2px;
+  margin: auto;
+	margin-top: 25px;
+	margin-bottom: 25px;
+  border-radius: 25px;
+  width:450px;
+}
+
+.btn-primary {
+  border-radius: 10px;
+}
+.form-control{
+  border-radius: 10px;
+}
+
+.btn-primary:hover {
+  color: #FFF;
+}
+
+.alert {
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  margin-bottom: 16px;
+  margin-top: 25px;
+  border-width: 2px;
+  border-style: solid;
+}
+
+.alert-error {
+  border-color: darkred;
+  background-color: red;
+  color: white;
+}
+
+.alert-info {
+  border-color: orange;
+  background-color: yellow;
+  color: black;
+}

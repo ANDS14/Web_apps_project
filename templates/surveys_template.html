@@ -1,0 +1,40 @@
+{%if others%}
+  {% set surveys=other_surveys %}
+{%endif%}
+<div id = "survey-results">
+  <div class="surveys-list-main">
+    <ul class="collapsible popout">
+      {%if surveys|length != 0%}
+        {% for survey in surveys %}
+            <li class="{{is_active}}">
+              {% include 'survey_template.html' %}
+                <!-- <div class="collapsible-body">
+                  <ul class="collapsible popout message">
+                    {%if responses|length>0%}
+                      {% for response in responses %}
+                        <li class="collection-item avatar">
+                          {% include 'response_template.html' %}
+                        </li>
+                      {% endfor %}
+                    {%else%}
+                        <p class="center">No responses</p>
+                    {%endif%}
+                  </ul>
+                </div> -->
+            </li>
+        {% endfor %}
+      {%else%}
+        <div class="center">
+        {%if not others%}
+            <h5 style="color:grey">Looks like you haven't created any surveys yet.</h5>
+            <a id="first-survey-btn" onclick="activate_msg_elem()" class="create-survey-btn btn waves-effect blue darken-3 white-text">
+              Create your first survey
+            </a>
+        {%else%}
+          <h5 style="color:grey">No surveys here.</h5>
+        {%endif%}
+        </div>
+      {%endif%}
+    </ul>
+  </div>
+<div>

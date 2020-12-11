@@ -1,0 +1,37 @@
+{% block content %}
+<!-- Jquery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<!-- static/util.js -->
+<script src="{{url_for('static', filename='util.js')}}"></script>
+
+<div class="new_survey_container">
+  <div id="new_survey" class="center-align">
+  {%if with_response%}
+    <form action="{{ url_for('main.create_new_survey') }}" method="post">
+      <input type="hidden" name="response_to" value="{{ posts[0].id }}">
+  {%else%}
+    <form action="{{ url_for('main.create_new_survey') }}" method="post">
+  {%endif%}
+      <div class="col s12 m6">
+        <div id="create_survey_card" class="card horizontal small teal">
+          <div class="card-content white-text"style="width:100%;height:100%">
+            <span id = "card_header" class="card-title"></span>
+            <div id="post-text" class="input-field">
+              <!-- <i class="material-icons prefix"></i> -->
+              <textarea id = "card_text" name="post_text" class="materialize-textarea post-text" data-length="220"></textarea>
+            </div>
+          </div>
+          <div  id="card_footer" class="card-action red">
+            <a onclick="this.closest('form').submit();return false;" href="#" class="white-text">POST</a>
+            <a id="cancel_msg_a" href="#" class="white-text">Cancel</a>
+          </div>
+        </div>
+      </div>
+    </form>
+  {% endblock %}
+  </div>
+</div>
+
+<!-- {%if with_response%}
+ <script>activate_msg_elem("{{current_user.name}} responds...",true)</script>
+{%endif%} -->

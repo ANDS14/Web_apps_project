@@ -1,0 +1,45 @@
+<div class="collapsible-header hoverable card teal">
+  <div class="survey-content card-content">
+    <div class = "card-title">
+      <div class="metadata">
+        <span class="survey-header">
+          <a class="survey_title black-text"> <!--href="{{url_for('main.profile',user_id=survey.user.id)}}" -->
+            <i class="material-icons prefix txt-icon" style="margin:0;padding:0">poll</i>
+            <b class="icon-text">{{ survey.title }}</b>
+          </a>
+          <span class="date_created right" style="font-size: 1.4rem">
+            {%set day_suffix="st" if survey.time_created.day==1  else "th"%}
+            <p>Created on {{survey.time_created.strftime("%b %d"+day_suffix+", %Y")}}</p>
+          </span>
+        </span>
+        <div class="survey-info">
+          <div class="state-info right">
+            <p class="icon-text">
+              {%set status=(survey.state._value2member_map_[1]|string)[12:]|lower%}
+              {%if status=="new"%}
+                <i class="material-icons prefix left txt-icon" style="color:darkgray;">fiber_manual_record</i>
+                {%set status="unactive"%}
+              {%elif status=="closed"%}
+                <i class="material-icons prefix left txt-icon" style="color:crimson;">fiber_manual_record</i>
+              {%elif status=="online"%}
+                <i class="material-icons prefix left txt-icon" style="color:darkgreen;">fiber_manual_record</i>
+              {%endif%}
+              {{status}}
+            </p>
+          </div>
+          <div class="questions-info left">
+            <p class="icon-text">
+              <i class="material-icons prefix left txt-icon">question_answer</i>
+              {{survey.questions|length}} answers
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-action survey-card-actions">
+      <!-- <a class="btn red hoverable" href="#">
+        <i class="material-icons">favorite</i>
+      </a> -->
+    </div>
+  </div>
+</div>

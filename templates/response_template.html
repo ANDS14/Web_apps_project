@@ -1,0 +1,25 @@
+<div class="collapsible-header message card teal">
+  <div class="message">
+      <div class = "card-content">
+        <div class = "card-title">
+          <div class="metadata">
+            <span class="author">
+              <a href="{{url_for('main.profile',user_id=response.user.id)}}" class="black-text">
+                <i class="material-icons prefix" style="margin:0;padding:0">person</i>
+                <b>{{ response.user.name }}</b>
+              </a>
+            </span>
+            <span class="date right">
+                {{ response.timestamp.strftime("%b %d") }}
+            </span>
+          </div>
+        </div>
+        <div class="text"> "{{ response.text}}"</div>
+      </div>
+      <div class="card-action msg-actions" style="margin-top:15px">
+        <a class="btn red hoverable" href="#"><i class="material-icons">favorite</i></a>
+        <a id = "response_a" class="btn blue hoverable" href="{{url_for('main.post',message_id=response.id,is_response=1)}}"><i class="material-icons">message</i></a>
+        <a class="btn yellow darken-3 right hoverable" href="{{url_for('main.post',message_id=response.id)}}"><i class="material-icons">aspect_ratio</i></a>
+      </div>
+    </div>
+</div>
