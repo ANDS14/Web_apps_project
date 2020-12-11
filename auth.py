@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 import flask_login
 from flask_login  import current_user
 
+
 #Import classes/functions from project modules:
 from .app import db, bcrypt
 from . import model
@@ -48,15 +49,10 @@ def signup():
         print("Unvalidated!")
         return render_template("auth/signup.html",form = form)
 
-    # Check that passwords are equal
-    if password != request.form.get("password_repeat"):
-        flash("Sorry, passwords are different", 'warning')
-        return render_template("auth/signup.html",form=form) #redirect(url_for("auth.signup"))
-
     # Check if the email is already at the database
     user = model.User.query.filter_by(email=email).first()
     if user:
-        flash("Sorry, the email you provided is already registered", 'warning')
+        flash("Sorry, the email you provided is already registered.Try again", 'danger')
         return render_template("auth/signup.html",form=form) #redirect(url_for("auth.signup"))
 
     #If none of the above conditions are met then the new user is created:
