@@ -6,8 +6,7 @@
                     <h4 id="surveyTitle"><i class="fas fa-poll" style="margin-right: 10px;font-size: 32px;"></i>{{survey.title}}</h4>
                 </div>
                 <div class="col-xl-6">
-                   {%set day_suffix="st" if survey.time_created.day==1  else "th"%}
-                    <p class="text-right" style="font-size: 20px;">Created on {{survey.time_created.strftime("%b %d"+day_suffix+", %Y")}}<br></p>
+                    <p class="text-right" style="font-size: 20px;">Created on {{survey.time_created.strftime("%b %d"+", %Y")}}<br></p>
                 </div>
             </div>
             <div class="row align-middle" id="cardBrief">
@@ -31,7 +30,7 @@
             </div>
         </div>
     </div>
-    <div id="survey-body" class="collapse-show" aria-labelledby="survey-body" style="background: #ffffff;">
+    <div id="survey-body" class="collapse" aria-labelledby="survey-body" style="background: #ffffff;">
         <div id="card-body" class="card-body" style="background: #ffffff;border-color: rgb(255,255,255);padding: 0px;">
             <div id="survey-info" style="margin: 10px;margin-top: 15px;">
                 <div class="row align-middle">
