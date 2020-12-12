@@ -1,9 +1,69 @@
-<div class="collapsible-header hoverable card teal">
+<div class="card hoverable" style="padding: 0px;border-radius: .3rem;">
+    <div id="surveyMain" class="header-card" style="margin: 0px;margin-top: 0px;padding: 0px;cursor: pointer;background: #20c997;border-radius: inherit;" data-toggle="collapse" data-target="#survey-body" aria-expanded="false" aria-controls="survey-body" onclick="&quot;&quot;">
+        <div style="margin: 15px;margin-top: 18px;padding: 8px;">
+            <div class="row" id="cardHeader">
+                <div class="col-xl-6">
+                    <h4 id="surveyTitle"><i class="fas fa-poll" style="margin-right: 10px;font-size: 32px;"></i>{{survey.title}}</h4>
+                </div>
+                <div class="col-xl-6">
+                   {%set day_suffix="st" if survey.time_created.day==1  else "th"%}
+                    <p class="text-right" style="font-size: 20px;">Created on {{survey.time_created.strftime("%b %d"+day_suffix+", %Y")}}<br></p>
+                </div>
+            </div>
+            <div class="row align-middle" id="cardBrief">
+                <div class="col">
+                    <h5 style="line-height: 28px;margin: 0;padding: 0;"><i class="material-icons" style="margin-right: 5px;margin-top: 0px;display: inline-flex;vertical-align: top;padding: 0;">question_answer</i>0 answers</h5>
+                </div>
+                <div class="col">
+                    <h6 class="text-monospace text-right mb-2" style="color: rgb(17,17,17);">
+                      {%set status=(survey.state._value2member_map_[1]|string)[12:]|lower%}
+                      {%if status=="new"%}
+                        <i class="fa fa-circle heading-icon" style="margin-top: 2px; color:darkgray;"></i>
+                        {%set status="unactive"%}
+                      {%elif status=="closed"%}
+                        <i class="fa fa-circle heading-icon" style="margin-top: 2px; color:crimson;"></i>
+                      {%elif status=="online"%}
+                        <i class="fa fa-circle heading-icon" style="margin-top: 2px; color:darkgreen;"></i>
+                      {%endif%}
+                      {{status}}
+                    </h6>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="survey-body" class="collapse-show" aria-labelledby="survey-body" style="background: #ffffff;">
+        <div id="card-body" class="card-body" style="background: #ffffff;border-color: rgb(255,255,255);padding: 0px;">
+            <div id="survey-info" style="margin: 10px;margin-top: 15px;">
+                <div class="row align-middle">
+                    <div class="col">
+                        <h5>Info</h5>
+                    </div>
+                    <div class="col"><button class="btn btn-primary" id="edit-survey-btn" type="button" style="float: right;color: rgb(0,0,0);background: rgba(105,108,108,0.06);border-width: 1px;border-color: #1dba8b;" onclick="#">Edit Survey<i class="material-icons heading-icon" style="margin-top: 5px;font-size: 18px;margin-right: 0px;margin-bottom: 0px;margin-left: 6px;">edit</i></button></div>
+                </div>
+                <div class="row">
+                    <div class="col"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="collapsible-header hoverable card teal">
   <div class="survey-content card-content">
     <div class = "card-title">
       <div class="metadata">
         <span class="survey-header">
-          <a class="survey_title black-text"> <!--href="{{url_for('main.profile',user_id=survey.user.id)}}" -->
+          <a class="survey_title black-text">
             <i class="material-icons prefix txt-icon" style="margin:0;padding:0">poll</i>
             <b class="icon-text">{{ survey.title }}</b>
           </a>
@@ -37,9 +97,20 @@
       </div>
     </div>
     <div class="card-action survey-card-actions">
-      <!-- <a class="btn red hoverable" href="#">
-        <i class="material-icons">favorite</i>
-      </a> -->
     </div>
   </div>
-</div>
+</div> -->
+
+<!-- <div class="collapsible-body">
+  <ul class="collapsible popout message">
+    {%if responses|length>0%}
+      {% for response in responses %}
+        <li class="collection-item avatar">
+          {% include 'response_template.html' %}
+        </li>
+      {% endfor %}
+    {%else%}
+        <p class="center">No responses</p>
+    {%endif%}
+  </ul>
+</div> -->

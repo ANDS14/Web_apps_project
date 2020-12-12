@@ -59,3 +59,4 @@ Thumbs.db
 #temporary directories
 temp/
 TEMP/
+venv/

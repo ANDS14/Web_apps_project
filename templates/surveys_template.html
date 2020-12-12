@@ -2,26 +2,18 @@
   {% set surveys=other_surveys %}
 {%endif%}
 <div id = "survey-results">
-  <div class="surveys-list-main">
-    <ul class="collapsible popout">
+    <ul id="surveysMainList">
       {%if surveys|length != 0%}
         {% for survey in surveys %}
-            <li class="{{is_active}}">
-              {% include 'survey_template.html' %}
-                <!-- <div class="collapsible-body">
-                  <ul class="collapsible popout message">
-                    {%if responses|length>0%}
-                      {% for response in responses %}
-                        <li class="collection-item avatar">
-                          {% include 'response_template.html' %}
-                        </li>
-                      {% endfor %}
-                    {%else%}
-                        <p class="center">No responses</p>
-                    {%endif%}
-                  </ul>
-                </div> -->
-            </li>
+            <!-- <li class="{{is_active}}"> -->
+              <div class="row" id="survey-row">
+                <div class="col-xl-3" style="width: 392px;"></div>
+                <div class="col-xl-6 offset-xl-0" id="survey" style="width: 374px;">
+                  {% include 'survey_template.html' %}
+                </div>
+                <div class="col-xl-3" style="width: 337px;"></div>
+              </div>
+            <!-- </li> -->
         {% endfor %}
       {%else%}
         <div class="center">

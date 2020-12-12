@@ -1,14 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <div id="main_surveys_view">
-    <h4 class="center">Your Surveys:</h4>
-    <div class="divider"></div>
+  <div style="margin: auto;margin-top: 25px;">
+      <h3 class="text-center">Your Surveys:</h3>
+      <hr style="width: 1087px;">
+  </div>
+  <div id="surveys "class="container surveys-container" style="margin: auto;margin-top: 25px;">
     {% include 'surveys_template.html' %}
-    <!-- <div class="divider" style="margin-top:50px"></div> -->
-    <!-- <h5 class="center">Other surveys you might be interested in:</h5>
-      {%set others=True%}
-      {% include 'surveys_template.html' %} -->
   </div>
   <div class="create_survey-btn fixed-action-btn">
     <a id="new_survey_a" class="btn-floating btn-large hoverable blue darken-3" href="javascript:void(0)"> <!--pulse-->
