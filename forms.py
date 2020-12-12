@@ -13,10 +13,12 @@ https://flask-wtf.readthedocs.io/en/stable/form.html
 
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, StringField, PasswordField,SubmitField,validators
+from flask_wtf.file import FileField, FileAllowed
+
 
 
 class SignUp(FlaskForm):
-    username = StringField('Username', [validators.Length(min=2, max=12)])
+    username = StringField('Username', [validators.DataRequired(),validators.Length(min=2, max=12)])
 
     email = StringField('Email Address', [validators.DataRequired(),validators.Email()])
 
@@ -28,7 +30,6 @@ class SignUp(FlaskForm):
 
     submit = SubmitField('Sign Up')
 
-
 class LogIn(FlaskForm):
 
     email = StringField('Email Address', [validators.DataRequired(),validators.Email()])
@@ -36,3 +37,14 @@ class LogIn(FlaskForm):
     password = PasswordField('Password', [validators.DataRequired()])
 
     submit = SubmitField('Log In')
+
+
+class UpdateProfile(FlaskForm):
+
+    username = StringField('Username', [validators.DataRequired(),validators.Length(min=2, max=12)])
+
+    email = StringField('Email Address', [validators.DataRequired(),validators.Email()])
+
+    #picture = FileField('Update Picture', validators = [FileAllowed(['jpg','png'])])
+
+    submit = SubmitField('Update')
