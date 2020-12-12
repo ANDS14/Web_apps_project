@@ -12,16 +12,6 @@ footer .container {
 	margin-left: 5%;
 }
 
-.bootstrap{
-	//bootstrap css framework styles
-	//All divs inside this class will use bootstrap's styles
-	//Inspired from:
-	//https://medium.com/@romeo/how-to-combine-multiple-css-frameworks-into-the-same-page-9705221b0c1c
-
-	@import url('/cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css');
-
-}
-
 .main_block {
 	margin-left: 2.5%;
 }
