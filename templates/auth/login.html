@@ -18,7 +18,7 @@
           {% endif %}
       </div>
 
-      <div class="form-group mb-4">
+      <div class="form-group mb-3">
         {{ form.password.label(class= "form-control-label")}}
         {% if form.password.errors %}
              {{ form.password(class = "form-control is-invalid") }}
@@ -31,12 +31,18 @@
            {{ form.password(class= "form-control") }}
         {% endif %}
       </div>
-      <h5>Or <a href="{{url_for('auth.signup')}}">sign up</a> if you haven't</h5>
       <div class="row justify-content-center">
         {{ form.submit(class= "btn btn-primary") }}
       </div>
-
     </fieldset>
+    <div>
+      <small class = "text-muted">
+        Do you need an account? <a class= "ml-2" href = "{{ url_for('auth.signup') }}"> Sign Up </a>
+      </small>
+    </div>
   </form>
 </div>
+
+
+
 {% endblock  %}
