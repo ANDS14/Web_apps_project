@@ -36,7 +36,6 @@
                   <ul class="nav navbar-nav ml-auto">
                     {%if not current_user.is_authenticated:%}
                       <li class="nav-item"><a class="nav-link" href="/signup" style="color: var(--dark);">Sign Up</a></li>
-                      <li class="nav-item"></li>
                       <li class="nav-item">
                         <button class="btn btn-primary" onclick="location.href='/login'" type="button">Sign In</button>
                       </li>
@@ -74,7 +73,7 @@
     </main>
 
     <div class="footer">
-        <div class="" style="text-align:center;color: rgb(41,44,47);background: #ffc107;margin-top: 20px;padding: 36px;">
+        <div class="" style="text-align:center;color: rgb(41,44,47);background: #ffc107;margin-top: 10px;padding: 1px;">
             <ul class="list-inline" style="color: #080a0b;">
                 <li class="list-inline-item"><a class="text-center" href="#" style="color:black">Home</a></li>
             </ul>

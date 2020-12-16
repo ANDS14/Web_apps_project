@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 import flask_login
-from flask_login  import current_user
+from flask_login  import current_user,login_required
 import secrets, os
 from PIL import Image
 
@@ -63,43 +63,37 @@ def signup():
     return render_template("auth/signup.html",form=form) #redirect(url_for("auth.signup"))
 
 @bp.route("/logout")
+@login_required
 def logout():
     flask_login.logout_user()
     return redirect(url_for("auth.login"))
 
 
-def save_pic(pic_name):
-    # we do not want to keep the name of the uploaded file because it could collide
-    # with an existing file in our pics folder.
-    # Therefore, we randomized it.
-    random_hex = secrets.token_hex(8)
+def save_image(picture):
 
-    # Upload the new picture with the same file extension
-    _ , f_extension =  os.path.splitext(pic_name.filename)
+    randomize = secrets.token_hex(8)
 
-    new_image = random_hex + f_extension
+    name,picture_extension = os.path.splitext(picture.filename)
 
-    # Suppose that we upload a large file. CSS will resize it to 125x125 and update with thta image the profile picture.
-    # In order to optimize the performance, we previously resize to 125x125 using the Pillow module
+    new_name = randomize + picture_extension
+
+    new_path = os.path.join(bp.root_path,"static","pics",new_name)
+
     size = (125,125)
-    image_resize = Image.open(pic_name)
+    image_resize = Image.open(picture)
     image_resize.thumbnail(size)
+    image_resize.save(new_path)
 
-    pic_path = os.path.join(bp.root_path,'BurritoSurvey/static/pics',new_image)
-    image_resize.save(pic_path) # Image saved but not in the database
-
-    return new_image
+    return new_name
 
 
 @bp.route("/account",methods = ['GET','POST'])
+@login_required
 def account():
     updated_form = UpdateProfile()
 
     if updated_form.validate_on_submit():
 
-        #if updated_form.picture.data:
-            #pic_file = save_pic(updated_form.picture.data)
-            #current_user.profile_image = pic_file
 
         if current_user.name != updated_form.username.data:
             user = model.User.query.filter_by(name = updated_form.username.data).first()
@@ -117,6 +111,11 @@ def account():
 
         current_user.name = updated_form.username.data
         current_user.email = updated_form.email.data
+
+        if updated_form.profile_picture.data:
+            new_image = save_image(updated_form.profile_picture.data)
+            current_user.profile_image = new_image
+
         db.session.commit()
 
         flash("Your account has been updated!", 'success')
@@ -129,5 +128,5 @@ def account():
         updated_form.username.data = current_user.name
         updated_form.email.data = current_user.email
 
-    #image = url_for('static',filename ="pics/"+current_user.profile_image)
-    return render_template('auth/account.html',form = updated_form)
+    image = url_for("static",filename = "/pics/"+ str(current_user.profile_image))
+    return render_template('auth/account.html',image = image,form = updated_form)

@@ -10,6 +10,7 @@ class User(flask_login.UserMixin,db.Model):
     email = db.Column(db.String(128), unique=True, nullable=False)
     name = db.Column(db.String(64), nullable=False)
     password = db.Column(db.String(100), nullable=False)
+    profile_image = db.Column(db.String(20),nullable=False,default = "user_icon.png")
     surveys = db.relationship('Survey', backref='user', lazy=True,cascade="all, delete-orphan",)
 
 class SurveyState(enum.Enum):
