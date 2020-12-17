@@ -1,8 +1,12 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash,send_file
 import flask_login
 from flask_login  import current_user,login_required
 import secrets, os
+import io
+from io import BytesIO
 from PIL import Image
+import csv
+from flask import Response
 
 
 
@@ -123,3 +127,37 @@ def account():
 
     image = url_for("static",filename = "/pics/"+ str(current_user.profile_image))
     return render_template('auth/account.html',image = image,form = updated_form)
+
+
+@bp.route('/download_questions_answers',methods = ['GET','POST'])
+@login_required
+def download():
+
+    questions = model.Question.query.all()
+    number_answers = model.Choice.query.all()
+    row = []
+
+    for i in number_answers:
+        if model.QuestionType.NUMBER == model.Question.type:
+            row.append((i.question_id.title,i.number))
+        elif model.QuestionType.TEXT == model.Question.type:
+            row.append((i.question_id.title,i.text))
+        else:
+            row.append((i.question_id.title,i.text,i.number))
+
+    proxy = io.StringIO()
+
+    writer = csv.writer(proxy)
+    for i in row:
+        writer.writerow(i)
+
+    # Creating the byteIO object from the StringIO Object
+    mem = io.BytesIO()
+    mem.write(proxy.getvalue().encode('utf-8'))
+    # seeking was necessary. Python 3.5.2, Flask 0.12.2
+    mem.seek(0)
+
+    return send_file(
+        mem,
+        mimetype='text/csv'
+    )
