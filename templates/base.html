@@ -37,6 +37,7 @@
                   <ul class="nav navbar-nav ml-auto">
                     {%if not current_user.is_authenticated:%}
                       <li class="nav-item"><a class="nav-link" href="/signup" style="color: var(--dark);">Sign Up</a></li>
+                      <li class="nav-item"><a class="nav-link" href="/online_surveys" style="color: var(--dark);">Surveys</a></li>
                       <li class="nav-item">
                         <button class="btn btn-primary" onclick="location.href='/login'" type="button">Sign In</button>
                       </li>

@@ -14,6 +14,11 @@ from datetime import datetime as dt
 
 bp = Blueprint("main", __name__)
 
+@bp.route("/online_surveys")
+def online_surveys():
+    surveys = model.Survey.query.filter_by(state = model.SurveyState.ONLINE).order_by(model.Survey.time_created.desc()).all()
+    return render_template("main/index.html",surveys=surveys)
+
 @bp.route("/")
 @flask_login.login_required
 def index():

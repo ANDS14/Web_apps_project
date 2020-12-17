@@ -2,7 +2,11 @@
 
 {% block content %}
   <div style="margin: auto;margin-top: 25px;">
-      <h3 class="text-center">Your Surveys:</h3>
+      {%if not current_user.is_authenticated:%}
+      <h3 class="text-center">Available Surveys</h3>
+      {% else %}
+        <h3 class="text-center">Your Surveys:</h3>
+      {% endif %}
       <hr style="width: 1087px;">
   </div>
   <div id="surveys "class="container surveys-container" style="margin: auto;margin-top: 25px;">
