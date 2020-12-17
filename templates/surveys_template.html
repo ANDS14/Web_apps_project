@@ -1,14 +1,12 @@
-{%if others%}
-  {% set surveys=other_surveys %}
-{%endif%}
 <div id = "survey-results">
     <ul id="surveysMainList">
       {%if surveys|length != 0%}
         {% for survey in surveys %}
+          <!-- {% set i = loop.index %} -->
             <!-- <li class="{{is_active}}"> -->
-              <div class="row" id="survey-row">
+              <div class="row">
                 <div class="col-xl-3" ></div>
-                <div class="col-xl-6 " id="survey" >
+                <div class="col-xl-6 ">
                   {% include 'survey_template.html' %}
                 </div>
                 <div class="col-xl-3"></div>
@@ -16,15 +14,11 @@
             <!-- </li> -->
         {% endfor %}
       {%else%}
-        <div class="center">
-        {%if not others%}
-            <h5 style="color:grey">Looks like you haven't created any surveys yet.</h5>
-            <a id="first-survey-btn" onclick="activate_msg_elem()" class="create-survey-btn btn waves-effect blue darken-3 white-text">
-              Create your first survey
-            </a>
-        {%else%}
-          <h5 style="color:grey">No surveys here.</h5>
-        {%endif%}
+        <div class="center" style="text-align:center; align-items:center">
+          <h5 style="color:grey">Looks like you haven't created any surveys yet.</h5>
+          <a id="first-survey-btn" onclick="activate_msg_elem()" class="create-survey-btn btn waves-effect blue darken-3 white-text">
+            Create your first survey
+          </a>
         </div>
       {%endif%}
     </ul>

@@ -58,3 +58,26 @@
   margin-bottom: 0;
 }
 
+#survey-name-input::placeholder {
+  color: darkgrey;
+}
+
+#survey-name-input {
+  /*border-bottom: 2px solid black !important;*/
+}
+
+.list-group-item textarea::placeholder {
+  color: #555555;
+}
+
+.list-group-item textarea::placeholder {
+  color: #555555;
+}
+
+.list-group-item textarea {
+  word-wrap: break-word;
+  resize: both;
+  overflow-y: hidden;
+  text-wrap: unrestricted;
+}
+

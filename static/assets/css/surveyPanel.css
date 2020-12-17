@@ -1,0 +1,78 @@
+.heading-icon {
+  display: inline-flex;
+  vertical-align: top;
+  margin-left: 2px;
+  margin-right: 5px;
+  padding: 0;
+}
+
+.heading {
+  line-height: 28px;
+  margin: 0;
+  padding: 0;
+}
+
+.card:hover {
+  /*transform: scale(1.05);*/
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.card.hoverable {
+  -webkit-transition: -webkit-box-shadow .25s;
+  transition: -webkit-box-shadow .25s;
+  transition: box-shadow .25s;
+  transition: box-shadow .25s, -webkit-box-shadow .25s;
+}
+
+.heading-icon {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 2px;
+  margin-right: 5px;
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+.heading-with-icon {
+  line-height: 28px;
+  margin: 0;
+  padding: 0;
+}
+
+.hoverable {
+  -webkit-transition: -webkit-box-shadow .25s;
+  transition: -webkit-box-shadow .25s;
+  transition: box-shadow .25s;
+  transition: box-shadow .25s, -webkit-box-shadow .25s;
+}
+
+.hoverable:hover {
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.list-group-item.list-group-item-action.active li {
+  background-color: rgb(0,123,255,0.3) !important;
+}
+
+textarea, input {
+  outline: none;
+}
+
+textarea {
+  resize: none !important;
+  border: none;
+}
+
+.list-group-item.list-group-item-action textarea::placeholder {
+  color: darkgrey;
+  text-decoration: blink;
+}
+
+i::before, i::before:hover {
+  text-decoration: none !important;
+}
+
+i[class^="icon-"]:before {
+  display: inline-block;
+  text-decoration: none;
+}

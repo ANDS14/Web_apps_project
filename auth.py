@@ -93,8 +93,6 @@ def account():
     updated_form = UpdateProfile()
 
     if updated_form.validate_on_submit():
-
-
         if current_user.name != updated_form.username.data:
             user = model.User.query.filter_by(name = updated_form.username.data).first()
             if user:
@@ -108,7 +106,6 @@ def account():
                 flash("Email is already taken","danger")
                 return redirect(url_for('auth.account'))
 
-
         current_user.name = updated_form.username.data
         current_user.email = updated_form.email.data
 
@@ -117,9 +114,7 @@ def account():
             current_user.profile_image = new_image
 
         db.session.commit()
-
         flash("Your account has been updated!", 'success')
-
         # we redirect here because when we open the browser after submitting we get a message
         # that asks ud whether we want to submit the form again
         return redirect(url_for('auth.account'))

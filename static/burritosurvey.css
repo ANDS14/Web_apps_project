@@ -8,8 +8,13 @@ main {
 	flex: 1 0 auto;
 }
 
-footer .container {
-	margin-left: 5%;
+footer {
+	text-align:center;
+	color: rgb(41,44,47);
+	background: #ffc107;
+	margin-top: 20px;
+	padding-top: 15px;
+	padding-bottom:5px
 }
 
 .main_block {
@@ -115,7 +120,7 @@ footer .container {
 
 .new_survey_container{
 	/* blurry background effect*/
-	position: fixed;
+	position: absolute;
 	display:none;
 	width: 100%;
 	height: 100%;
@@ -126,18 +131,11 @@ footer .container {
 }
 
 #new_survey{
-	position: fixed;
+	/* position: fixed; */
 	width: 70vw;
   height: 96vh;
   left: 15vw;top: 2vh;
 	align-items: center;
-}
-#create_survey_card{
-	max-width: 750px;
-	max-height: 850px;
-	height: 100% !important;
-	margin: auto;
-	margin-top:0;
 }
 
 .login-img{
@@ -215,4 +213,43 @@ footer .container {
   border-color: orange;
   background-color: yellow;
   color: black;
+}
+
+.heading-icon {
+  display: inline-flex;
+  vertical-align: middle;
+  margin-left: 2px;
+  margin-right: 5px;
+  margin-bottom: 4px;
+  padding: 0;
+}
+
+.heading-with-icon {
+  line-height: 28px;
+  margin: 0;
+  padding: 0;
+}
+
+.question-header-link{
+	color: #363739;
+	filter: brightness(75%);
+	opacity: 0.90;
+	border-color: #363739;
+}
+.question-header-link i{
+	color: black;
+	text-decoration: none;
+}
+
+
+.card:hover {
+  /*transform: scale(1.05);*/
+  box-shadow: 0 10px 20px rgba(0,0,0,.12), 0 4px 8px rgba(0,0,0,.06);
+}
+
+.card.hoverable {
+  -webkit-transition: -webkit-box-shadow .25s;
+  transition: -webkit-box-shadow .25s;
+  transition: box-shadow .25s;
+  transition: box-shadow .25s, -webkit-box-shadow .25s;
 }

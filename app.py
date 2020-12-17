@@ -3,13 +3,13 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_login  import current_user
-import pymysql
+# import pymysql
 
 from datetime import datetime as dt
 
 db = SQLAlchemy()
 bcrypt = Bcrypt()
-pymysql.install_as_MySQLdb()
+# pymysql.install_as_MySQLdb()
 app = Flask(__name__)
 
 
