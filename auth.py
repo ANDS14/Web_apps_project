@@ -79,10 +79,8 @@ def save_image(picture):
 
     new_path = os.path.join(bp.root_path,"static","pics",new_name)
 
-    size = (125,125)
-    image_resize = Image.open(picture)
-    image_resize.thumbnail(size)
-    image_resize.save(new_path)
+    image_ = Image.open(picture)
+    image_.save(new_path)
 
     return new_name
 
