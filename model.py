@@ -21,7 +21,7 @@ class SurveyState(enum.Enum):
 
 class Survey(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id',ondelete="CASCADE"), nullable=False)
     title = db.Column(db.String(64), nullable=False)
     questions = db.relationship(
         "Question",
@@ -44,7 +44,7 @@ class QuestionType(enum.Enum):
 __table_args__ = {'extend_existing': True}
 class Question(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    survey_id = db.Column(db.Integer, db.ForeignKey("survey.id"), nullable=False)
+    survey_id = db.Column(db.Integer, db.ForeignKey("survey.id",ondelete="CASCADE"), nullable=False)
     position = db.Column(db.Integer, autoincrement=True)
     type = db.Column(db.Enum(QuestionType), nullable=False)
     title = db.Column(db.String(512), nullable=False)
@@ -60,12 +60,12 @@ class QuestionAnswer(db.Model):
     text = db.Column(db.String(512))
     number = db.Column(db.Integer)
 
-    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id',ondelete="CASCADE"), nullable=False)
 
 __table_args__ = {'extend_existing': True}
 class Choice(db.Model):
     #TODO
     id = db.Column(db.Integer, primary_key=True)
-    question_id = db.Column(db.Integer, db.ForeignKey('question.id'), nullable=False)
+    question_id = db.Column(db.Integer, db.ForeignKey('question.id',ondelete="CASCADE"), nullable=False)
     number = db.Column(db.Integer)
     text = db.Column(db.String(250),nullable=True)

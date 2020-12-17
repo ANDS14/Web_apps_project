@@ -16,19 +16,21 @@
                       <i class="material-icons" style="margin-right: 5px;margin-top: 0px;display: inline-flex;vertical-align: top;padding: 0;">
                         question_answer</i>
                         {{survey.questions | length}} question(s)
-                      </h5>
+                    </h5>
                 </div>
                 <div class="col">
                     <h6 class="text-monospace text-right mb-2" style="color: rgb(17,17,17);">
-
                       {%set status=((survey.state|string)[12:]|lower)%}
                       {%if status=="new"%}
                         <i class="fa fa-circle heading-icon" style="margin-top: 2px; color:darkgray;"></i>
                         {%set status="new (unactive)"%}
+                        {%set opposite_status="online"%}
                       {%elif status=="closed"%}
                         <i class="fa fa-circle heading-icon" style="margin-top: 2px; color:crimson;"></i>
+                        {%set opposite_status="online"%}
                       {%else%}
                         <i class="fa fa-circle heading-icon" style="margin-top: 2px; color:darkgreen;"></i>
+                        {%set opposite_status="offline"%}
                       {%endif%}
                       {{status}}
                     </h6>
@@ -39,21 +41,17 @@
     <div id="survey{{loop.index}}-body" class="collapse" aria-labelledby="survey-body" style="background: #ffffff;">
         <div id="card-body" class="card-body" style="background: #ffffff;border-color: rgb(255,255,255);padding: 0px;">
             <div id="survey{{loop.index}}-info" style="margin: 10px;margin-top: 15px;">
-                <div class="row align-middle"style="margin-right: 0px;margin-left: 0px;padding: 2px;">
+                <div class="row "style="margin-right: 0px;margin-left: 0px;padding: 2px;">
                     <div class="col">
-                        <h5>Info</h5>
+                        <h5><a href="/change_survey_state/{{survey.id}}">Set to {{opposite_status}}</a></h5>
                     </div>
-                    <div class="col">
-                      <!-- <button class="btn btn-primary" id="edit-survey-btn" type="button" style="float: right;color: rgb(0,0,0);background: rgba(105,108,108,0.06);border-width: 1px;border-color: #1dba8b;" onclick="#">
-                        Edit Survey<i class="material-icons heading-icon" style="margin-top: 5px;font-size: 18px;margin-right: 0px;margin-bottom: 0px;margin-left: 6px;">
-                          edit
-                        </i>
-                      </button> -->
+                    <div class="col offset-xl-6">
+                      <button class="btn btn-primary" style="float:right;padding: 6px;padding-bottom: 0px;padding-top: 3px;background: rgba(255,15,0,0);border-style: none;color: inherit;">
+                        <a href="/delete_survey/{{survey.id}}"><i class="material-icons" style="font-size: 22px; color:black">delete</i></a>
+                      </button>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col"></div>
-                </div>
+
             </div>
         </div>
     </div>

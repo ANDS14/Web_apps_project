@@ -1,7 +1,7 @@
 import datetime, os
 from dateutil import tz
 
-from flask import Flask,Blueprint, request, render_template, redirect, url_for, flash
+from flask import Flask,Blueprint, request, render_template, redirect, url_for, flash, abort
 from flask_login  import current_user
 import flask_login
 from . import model
@@ -18,16 +18,15 @@ bp = Blueprint("main", __name__)
 @flask_login.login_required
 def index():
     surveys = model.Survey.query.filter_by(user_id=current_user.id).order_by(model.Survey.time_created.desc()).limit(10).all()
-
     return render_template("main/index.html",surveys=surveys)
 
-#@bp.route("/profile/<int:user_id>")
-#@flask_login.login_required
-@bp.route("/profile/<int:user_id>")
+# @bp.route("/profile/<int:user_id>")
+@flask_login.login_required
+@bp.route("/account/<int:user_id>")
 def profile(user_id):
-    user = model.User.query.filter_by(id=user_id).first_or_404()
-    user_surveys = model.Survey.query.filter_by(user=user).order_by(model.Survey.time_created.desc()).all()
-    return render_template("main/profile.html", user=user,surveys=user_surveys)#,responses=None)
+    # user = model.User.query.filter_by(id=user_id).first_or_404()
+    # user_surveys = model.Survey.query.filter_by(user=user).order_by(model.Survey.time_created.desc()).all()
+    return redirect(url_for("auth.account"))#,responses=None)
 
 @bp.route("/new_survey",methods=["POST"])
 @flask_login.login_required
@@ -80,10 +79,47 @@ def create_new_survey():
 
     return redirect(request.referrer)#url_for("main.index")
 
-@bp.route("/change_survey_state/<int:survey_id>",methods=["POST"])
+
+@bp.route("/survey/<int:survey_uri>",methods=["POST"])
+@flask_login.login_required
+def survey(survey_uri):
+    survey = model.Survey.query.filter_by(id=survey_uri).first_or_404()
+    if survey.state == model.SurveyState.CLOSED:
+        print("Survey is closed at the moment.")
+        abort(403)
+
+    render_template("templates/survey_response_template.html",survey=survey)
+
+
+@bp.route("/change_survey_state/<int:survey_id>",methods=["GET","POST"])
 @flask_login.login_required
 def change_survey_state(survey_id):
     survey = model.Survey.query.filter_by(id=survey_id).first_or_404()
+    if survey.user_id != current_user.id:
+        print("This user cant change this survey")
+        abort(403)
+
+    print("Change state of survey with id:", survey.id)
+    if survey.state == model.SurveyState.CLOSED:
+        survey.state = model.SurveyState.ONLINE
+    else:
+        survey.state = model.SurveyState.CLOSED
+
+    db.session.commit()
+    return redirect(url_for("main.index"))
+
+@bp.route("/delete_survey/<int:survey_id>",methods=["GET","POST"])
+@flask_login.login_required
+def delete_survey(survey_id):
+    survey = model.Survey.query.filter_by(id=survey_id).first_or_404()
+    if survey.user_id != current_user.id:
+        print("This user cant change this survey");
+        abort(403)
+    print("delete survey with id:", survey.id)
+    # model.Survey.query.filter_by(id=survey_id).delete(survey_id)
+    db.session.delete(survey)
+    db.session.commit()
+    return redirect(url_for("main.index"))
 
 
 if __name__ == "__main__":
