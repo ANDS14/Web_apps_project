@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+
+<script>
+  src="{{ url_for('static', filename='js/fillsurvey.js') }}"
+</script>
+
+
+{% block content %}
+  <div
+    id="surveyFiller"
+    class="card"
+    style="width: 75%;height: 100%;margin: auto;margin-top: 30px;max-width: 1000px;padding: 0px;"
+    data-surveyid="{{survey.id}}">
+    <div
+      class="card-body"
+      style="background: rgba(255,193,7,0.71);border-style: solid;border-color: #f7e859;">
+      <form
+        id="surveyForm"
+        class="needs-validation"
+        action="{{url_for('main.survey_answer', survey_uri=survey.id)}}"
+        method="post"
+        onsubmit="return OnWrapSurveyBtnClick('{{url_for('main.survey_answer', survey_uri=survey.id)}}');"
+        role="form"
+        enctype="application/json">
+        <div
+          id="survey-header"
+          class="form-row align-middle">
+          <div
+            class="col-xl-8 offset-xl-0"
+            style="display: inherit;">
+            <i
+              class="material-icons heading-icon"
+              style="font-size: 49px;margin-bottom: 2px;color: #17a2b8;">
+              poll
+            </i>
+
+            <h1 id="survey-name">{{survey.title}}</h1>
+          </div>
+        </div>
+
+        <p class="text-center help-text">Please Answer the questions below:</p>
+
+        <div
+          id="survey-creator-answers-container"
+          class="form-row scstyle-6 sc-overflow">
+          <div class="col">
+            <div
+              id="accordion-1"
+              role="tablist">
+              {% for question in questions %}
+                <!-- {{loop.index}}  -->
+                {%set questionType=((question.type|string)[13:]|lower)%}
+                {%if questionType=="select" %}
+                  {% include "singlechoice_template.html"%}
+                {% elif questionType=="select" %}
+                  {%include 'multichoice_template.html'%}
+                {%elif questionType=="select"%}
+                  {%include 'textanswer_template.html'%}
+                {%else%}
+                  {%include 'numanswer_template.html'%}
+                {%endif%}
+              {%endfor%}
+            </div>
+          </div>
+        </div>
+
+        <p class="text-center help-text">
+          When you finish press the button below to send your results.
+        </p>
+
+        <div
+          id="survey-actions"
+          class="form-row text-right"
+          style="margin-top: 0px;">
+          <div
+            class="col-xl-4 offset-xl-8 justify-content-center"
+            style="align-items: center;">
+            <button
+              id="wrap-survey-btn"
+              class="btn btn-primary text-right hoverable"
+              name="wrap-survey-btn"
+              type="submit"
+              style="background: #17a2b8;color: #292c2f;height: 43px;">
+              Wrap your Answers!
+
+              <!-- <img
+                class="heading-icon wrap-answers-icon"
+                src="static/burritoicon.svg"/> -->
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+{%endblock%}

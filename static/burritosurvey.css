@@ -130,12 +130,12 @@ footer {
 	z-index: 100;
 }
 
-#new_survey{
+#survey-creator-answers-container{
 	/* position: fixed; */
-	width: 70vw;
-  height: 96vh;
-  left: 15vw;top: 2vh;
-	align-items: center;
+	max-height: 60vh;
+	overflow-y: auto;
+	overflow-x: none;
+
 }
 
 .login-img{

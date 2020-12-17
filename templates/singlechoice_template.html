@@ -1,0 +1,84 @@
+<div
+  id="single-choice-question"
+  class="card question-item"
+  data-type="1">
+  <div
+    class="card-header"
+    role="tab"
+    style="background: rgb(220,53,69);border-width: 3px;border-style: none;margin: -2px;margin-top: -2px;margin-bottom: -2px;"
+    maxlength="250">
+    <h5
+      class="mb-0"
+      style="background: #dc3545;border-color: var(--dark);">
+      <a
+        href="#accordion-1 .item-{{loop.index}}"
+        data-toggle="collapse"
+        aria-expanded="true"
+        aria-controls="accordion-1 .item-{{loop.index}}"
+        style="color: #363739;filter: brightness(75%) contrast(84%) saturate(54%);opacity: 0.91;">
+        <i class="material-icons heading-icon">arrow_drop_down_circle</i>
+        {{question.title}}
+      </a>
+
+      <a
+        href="#"
+        style="float: right;color: black;">
+        <i
+          class="fas fa-chevron-down"
+          style="float: right;">
+        </i>
+      </a>
+    </h5>
+  </div>
+
+  <div
+    class="collapse show item-{{loop.index}}"
+    role="tabpanel"
+    data-parent="#accordion-1">
+    <div class="card-body">
+      <div class="single-choice-radios">
+        <ul
+          class="list-group list-group-flush single-choice-list"
+          role="tablist">
+          <li
+            class="list-group-item list-group-item-action"
+            style="padding-top: 12px;"
+            onclick="$(this).find("input").prop("checked", true);">
+            <div class="form-check">
+              <input
+                id="formCheck-1"
+                class="form-check-input"
+                name="single-choice1-radio"
+                type="radio"
+                value="0"/>
+              <label
+                class="form-check-label"
+                for="formCheck-1">
+                Label
+              </label>
+            </div>
+          </li>
+
+          <li
+            class="list-group-item list-group-item-action"
+            style="padding-top: 12px;"
+            onclick="$(this).find("input").prop("checked", true);">
+            <div class="form-check">
+              <input
+                id="formCheck-2"
+                class="form-check-input"
+                name="single-choice1-radio"
+                type="radio"
+                value="1"/>
+              <label
+                class="form-check-label"
+                for="formCheck-1">
+                Label
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -41,16 +41,19 @@
     <div id="survey{{loop.index}}-body" class="collapse" aria-labelledby="survey-body" style="background: #ffffff;">
         <div id="card-body" class="card-body" style="background: #ffffff;border-color: rgb(255,255,255);padding: 0px;">
             <div id="survey{{loop.index}}-info" style="margin: 10px;margin-top: 15px;">
-                <div class="row "style="margin-right: 0px;margin-left: 0px;padding: 2px;">
-                    <div class="col">
-                        <h5><a href="/change_survey_state/{{survey.id}}">Set to {{opposite_status}}</a></h5>
-                    </div>
-                    <div class="col offset-xl-6">
-                      <button class="btn btn-primary" style="float:right;padding: 6px;padding-bottom: 0px;padding-top: 3px;background: rgba(255,15,0,0);border-style: none;color: inherit;">
-                        <a href="/delete_survey/{{survey.id}}"><i class="material-icons" style="font-size: 22px; color:black">delete</i></a>
-                      </button>
-                    </div>
-                </div>
+              <div class="row "style="margin-right: 0px;margin-left: 0px;padding: 2px;">
+                <h5><a href="/survey/{{survey.id}}">Reply url</a></h5>
+              </div>
+              <div class="row "style="margin-right: 0px;margin-left: 0px;padding: 2px;">
+                  <div class="col">
+                      <h5><a href="/change_survey_state/{{survey.id}}">Set to {{opposite_status}}</a></h5>
+                  </div>
+                  <div class="col offset-xl-6">
+                    <button class="btn btn-primary" style="float:right;padding: 6px;padding-bottom: 0px;padding-top: 3px;background: rgba(255,15,0,0);border-style: none;color: inherit;">
+                      <a href="/delete_survey/{{survey.id}}"><i class="material-icons" style="font-size: 22px; color:black">delete</i></a>
+                    </button>
+                  </div>
+              </div>
 
             </div>
         </div>

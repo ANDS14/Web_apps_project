@@ -1,0 +1,71 @@
+<div
+  id="numeric-question"
+  class="card question-item"
+  data-type="4">
+  <div
+    class="card-header"
+    role="tab"
+    style="background: rgb(0,123,255);margin: -2px;margin-bottom: -2px;">
+    <h5
+      class="mb-0"
+      style="border-color: var(--dark);">
+      <a
+        href="#accordion-1 .item-{{loop.index}}"
+        data-toggle="collapse"
+        aria-expanded="false"
+        aria-controls="accordion-1 .item-{{loop.index}}"
+        style="color: #363739;filter: brightness(75%);opacity: 0.90;border-color: #363739;">
+        <i
+          class="typcn typcn-sort-numerically"
+          style="font-size: 20px;margin-right: 4px;">
+        </i>
+        {{question.title}}
+      </a>
+
+      <a
+        href="#"
+        style="float: right;color: black;">
+        <i
+          class="fas fa-chevron-down"
+          style="float: right;">
+        </i>
+      </a>
+    </h5>
+  </div>
+
+  <div
+    class="collapse item-{{loop.index}}"
+    role="tabpanel"
+    data-parent="#accordion-1">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="col-xl-7">
+          <p
+            id="max-chars-input-2"
+            class="text-left"
+            style="font-size: 16px;">
+            Introduce a positive number:
+          </p>
+
+          <input
+            class="form-control form-control"
+            type="number"
+            style="height: 50%;margin-top: 5px;"
+            oninput="verifyNumberInput($(this));"
+            default="null"/>
+          <span
+            class="invalid-feedback"
+            style="margin-top: 0px;">
+            Invalid number
+          </span>
+
+          <span
+            class="numbertype"
+            style="display:none">
+            2
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

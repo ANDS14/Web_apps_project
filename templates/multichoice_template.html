@@ -1,0 +1,86 @@
+<div
+  id="multi-choice-question"
+  class="card question-item"
+  data-type="2">
+  <div
+    class="card-header"
+    role="tab"
+    style="background: rgb(40,167,69);color: var(--dark);margin: -2px;margin-bottom: -2px;">
+    <h5
+      class="mb-0"
+      style="color: var(--dark);">
+      <a
+        href="#accordion-1 .item-{{loop.index}}"
+        data-toggle="collapse"
+        aria-expanded="false"
+        aria-controls="accordion-1 .item-{{loop.index}}"
+        style="color: #363739;filter: brightness(75%);opacity: 0.90;">
+        <i
+          class="material-icons heading-icon"
+          style="text-decoration:none">
+          format_list_bulleted
+        </i>
+
+        {{question.title}}
+      </a>
+
+      <a
+        href="#"
+        style="float: right;color: black;">
+        <i
+          class="fas fa-chevron-down"
+          style="float: right;">
+        </i>
+      </a>
+    </h5>
+  </div>
+
+  <div
+    class="collapse item-{{loop.index}}"
+    role="tabpanel"
+    data-parent="#accordion-1">
+    <div class="card-body">
+      <div class="single-choice-radios">
+        <ul
+          class="list-group list-group-flush single-choice-list"
+          role="tablist">
+          <li
+            class="list-group-item list-group-item-action"
+            style="padding-top: 12px;"
+            onclick="$(this).find("input").prop("checked", !$(this).find("input").is(':checked'));">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                name
+                type="radio"
+                value="{{loop.index}}"/>
+              <label
+                class="form-check-label"
+                for="formCheck-1">
+                Label
+              </label>
+            </div>
+          </li>
+
+          <li
+            class="list-group-item list-group-item-action"
+            style="padding-top: 12px;"
+            onclick="$(this).find("input").prop("checked", !$(this).find("input").is(':checked'));">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                name
+                type="radio"
+                value="{{loop.index}}"/>
+              <label
+                class="form-check-label"
+                for="formCheck-1">
+                Label
+              </label>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,213 +1,691 @@
 {% block content %}
-<link rel="stylesheet" href="static/createsurvey.css">
+
+<link
+  href="{{ url_for('static', filename='createsurvey.css') }}"
+  rel="stylesheet">
+</link>
+
+<script>
+  src="{{ url_for('static', filename='js/createsurvey.js') }}"
+</script>
 
 <!-- Container of panel to create a new survey -->
+
 <div class="new_survey_container">
-  <div class="new_survey center-align" style="">
-    <!-- Main card with all the buttons and options  -->
-      <div class="card" style="width: 60%;height: 100%;margin: auto;margin-top: 30px;max-width: 800px;">
-        <form id="createSurveyForm" role="form" action = "{{url_for('main.create_new_survey')}}"
-        method="post" enctype="application/json" onsubmit="return OnWrapSurveyBtnClick('{{url_for('main.create_new_survey')}}');" >
-          <div class="card-body" style="background: #17a2b8;">
-              <div class="form-row align-middle" id="survey-creator-header">
-                  <div class="col-xl-7" style="/*border-bottom: 8px solid red;*/display: inherit;">
-                    <i class="material-icons heading-icon" style="font-size: 49px;margin-bottom: 2px;color: var(--gray-dark);">poll</i>
-                    <input id="survey-name-input" class="form-control form-control-lg heading-with-icon" type="text"  placeholder="Survey Name" required="" maxlength="30" name="survey-name" autofocus="">
+  <div
+    class="new_survey center-align"
+    style>
+    <!-- Main card with all the buttons and options -->
+
+    <div
+      id="createSurveyCard"
+      class="card"
+      style="width: 60%;height: 100%;margin: auto;margin-top: 30px;max-width: 800px;">
+      <form
+        id="createSurveyForm"
+        action="{{url_for('main.create_new_survey')}}"
+        role="form"
+        method="post"
+        enctype="application/json"
+        onsubmit="return OnWrapSurveyBtnClick('{{url_for('main.create_new_survey')}}');">
+        <div
+          id="surveyCreatorBody"
+          class="card-body"
+          style="background: #17a2b8;">
+          <div
+            id="survey-creator-header"
+            class="form-row align-middle">
+            <div
+              class="col-xl-7"
+              style="/*border-bottom: 8px solid red;*/display: inherit;">
+              <i
+                class="material-icons heading-icon"
+                style="font-size: 49px;margin-bottom: 2px;color: var(--gray-dark);">
+                poll
+              </i>
+
+              <input
+                id="survey-name-input"
+                class="form-control form-control-lg heading-with-icon"
+                autofocus
+                name="survey-name"
+                type="text"
+                placeholder="Survey Name"
+                required
+                maxlength="30"/>
+            </div>
+
+            <div class="col-xl-5">
+              <button
+                id="wrap-survey-btn"
+                class="btn btn-primary text-right hoverable"
+                name="create-survey-btn"
+                type="submit">
+                Wrap your Survey!
+
+                <img
+                  id="wrap-survey-icon"
+                  class="heading-icon"
+                  src="{{ url_for('static', filename='burrito.svg') }}"/>
+              </button>
+            </div>
+          </div>
+
+          <div
+            id="survey-creator-answers-container"
+            class="row">
+            <div class="col">
+              <div
+                id="accordion-1"
+                role="tablist">
+                <!--
+                  This are the 4 main cards that are used by the javascript function
+                  newSurveyQuestion() to create new ones from these.
+                -->
+
+                <div
+                  id="single-choice-question"
+                  class="card"
+                  style="display:none;">
+                  <!-- Single-choice question card -->
+
+                  <a
+                    class="question-header-link"
+                    href="#accordion-1 .item-1"
+                    data-toggle="collapse"
+                    aria-expanded="true"
+                    aria-controls="accordion-1 .item-1">
+                  </a>
+
+                  <div
+                    class="card-header"
+                    role="tab"
+                    style="background: rgb(220,53,69);border-width: 3px;border-style: none;margin: -2px;margin-top: -2px;margin-bottom: -2px;"
+                    maxlength="250">
+                    <a
+                      data-toggle="collapse"
+                      aria-expanded="true"
+                      aria-controls="accordion-1 .item-1">
+                      <i
+                        class="material-icons"
+                        style="text-decoration:none">
+                        arrow_drop_down_circle
+                      </i>
+
+                      <textarea
+                        class="question-statement-input"
+                        placeholder="Write your question here"
+                        rows="1"
+                        onkeyup="SetNewSize(this);"
+                        maxlength="250">
+                      </textarea>
+
+                      <!--
+                        <h5 class="mb-0" style="background: #dc3545;border-color: var(dark);">Single
+                        Choice</h5>
+                      -->
+                    </a>
+
+                    <a
+                      href="#"
+                      style="float: right;color: black;">
+                      <i
+                        class="heading-icon fas fa-chevron-down"
+                        style="float: right;">
+                      </i>
+                    </a>
                   </div>
-                  <div class="col-xl-5">
-                    <button class="btn btn-primary text-right hoverable" id="wrap-survey-btn" type="submit"
-                      name="create-survey-btn">
-                      Wrap your Survey!
-                      <img id="wrap-survey-icon" class="heading-icon" src="{{ url_for('static', filename='burrito.svg') }}" >
+
+                  <div
+                    class="collapse show item-1"
+                    role="tabpanel"
+                    data-parent="#accordion-1">
+                    <div class="card-body">
+                      <ul
+                        id="singleChoiceList"
+                        class="list-group list-group-flush single-choice-list"
+                        role="tablist">
+                        <li
+                          id="single-choice-option"
+                          class="list-group-item list-group-item-action"
+                          style="padding-top: 12px;display:none;">
+                          <i
+                            class="fa fa-circle-thin"
+                            style="font-size: 21px;display: inline-block;margin-right: 15px;float: left;margin-top: 5px;">
+                          </i>
+
+                          <textarea
+                            style="width: 85%;background: rgba(255,255,255,0);border-style: none;color: inherit;font-size: 15px;"
+                            placeholder="Write answer choice"
+                            rows="1"
+                            onkeyup="SetNewSize(this);"
+                            maxlength="250">
+                          </textarea>
+
+                          <button
+                            id="delete-answer-btn"
+                            class="btn btn-primary"
+                            type="button"
+                            style="padding: 6px;padding-bottom: 0px;padding-top: 3px;background: rgba(255,15,0,0);color: inherit;border-style: none;"
+                            onclick="$(this).parent().remove();">
+                            <i
+                              class="material-icons"
+                              style="font-size: 22px;">
+                              delete
+                            </i>
+                          </button>
+                        </li>
+                      </ul>
+
+                      <button
+                        class="btn btn-primary"
+                        type="button"
+                        style="margin-top: 6px;"
+                        onclick="newSingleAnswerOption($(this));">
+                        Add Answer
+                      </button>
+
+                      <button
+                        class="btn btn-primary"
+                        type="button"
+                        style="background: #8f9296;color: var(--gray-dark);border-style: none;margin-top: 6px;margin-left: 10px;"
+                        onclick="$(this).closest('.card').remove();">
+                        <i
+                          class="material-icons"
+                          style="font-size: 22px;margin: 0;">
+                          delete
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  id="multi-choice-question"
+                  class="card"
+                  style="display: none;">
+                  <!-- Multiple-choice question card -->
+
+                  <a
+                    class="question-header-link"
+                    href="#accordion-1 .item-2"
+                    data-toggle="collapse"
+                    aria-expanded="false"
+                    aria-controls="accordion-1 .item-2">
+                  </a>
+
+                  <div
+                    class="card-header"
+                    role="tab"
+                    style="background: rgb(40,167,69);color: var(--dark);margin: -2px;margin-bottom: -2px;">
+                    <a
+                      data-toggle="collapse"
+                      aria-expanded="false"
+                      aria-controls="accordion-1 .item-2">
+                      <!-- <h5 class="mb-0" style="color: var(dark);">  Multiple Choice   </h5> -->
+
+                      <i
+                        class="material-icons"
+                        style="text-decoration:none">
+                        format_list_bulleted
+                      </i>
+
+                      <textarea
+                        class="question-statement-input"
+                        placeholder="Write your question here"
+                        rows="1"
+                        onkeyup="SetNewSize(this);"
+                        maxlength="500">
+                      </textarea>
+                    </a>
+
+                    <a
+                      href="#"
+                      style="float: right;color: black;">
+                      <i
+                        class="fas fa-chevron-down"
+                        style="float: right;">
+                      </i>
+                    </a>
+                  </div>
+
+                  <div
+                    class="collapse item-2"
+                    role="tabpanel"
+                    data-parent="#accordion-1">
+                    <div class="card-body">
+                      <ul
+                        id="multiChoiceList"
+                        class="list-group list-group-flush multichoice-list"
+                        role="tablist">
+                        <li
+                          id="multi-choice-option"
+                          class="list-group-item list-group-item-action"
+                          style="padding-top: 12px;display:none;">
+                          <i
+                            class="fa fa-circle-thin"
+                            style="font-size: 21px;display: inline-block;margin-right: 15px;float: left;margin-top: 5px;">
+                          </i>
+
+                          <textarea
+                            style="width: 85%;background: rgba(255,255,255,0);border-style: none;color: inherit;font-size: 16px;"
+                            placeholder="Write answer choice"
+                            rows="1"
+                            onkeyup="SetNewSize(this);"
+                            maxlength="250">
+                          </textarea>
+
+                          <button
+                            id="delete-answer-btn-3"
+                            class="btn btn-primary"
+                            type="button"
+                            style="padding: 6px;padding-bottom: 0px;padding-top: 3px;background: rgba(255,15,0,0);border-style: none;color: inherit;"
+                            onclick="$(this).parent().remove();">
+                            <i
+                              class="material-icons"
+                              style="font-size: 22px;color: inherit;">
+                              delete
+                            </i>
+                          </button>
+                        </li>
+                      </ul>
+
+                      <button
+                        class="btn btn-primary"
+                        type="button"
+                        style="margin-top: 6px;"
+                        onclick="newMultiAnswerOption($(this));">
+                        Add Answer
+                      </button>
+
+                      <button
+                        class="btn btn-primary"
+                        type="button"
+                        style="background: #8f9296;color: var(--gray-dark);border-style: none;margin-top: 6px;margin-left: 10px;"
+                        onclick="$(this).closest('.card').remove();">
+                        <i
+                          class="material-icons"
+                          style="font-size: 22px;margin: 0;">
+                          delete
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  id="text-question"
+                  class="card"
+                  style="display: none;">
+                  <!-- Text question card -->
+
+                  <a
+                    class="question-header-link"
+                    href="#accordion-1 .item-3"
+                    data-toggle="collapse"
+                    aria-expanded="false"
+                    aria-controls="accordion-1 .item-3">
+                  </a>
+
+                  <div
+                    class="card-header"
+                    role="tab"
+                    style="background: rgb(253,126,20);margin: -2px;margin-bottom: -2px;">
+                    <a
+                      data-toggle="collapse"
+                      aria-expanded="false"
+                      aria-controls="accordion-1 .item-3">
+                      <!-- <h5 class="mb-0" style="border-color: var(dark);">Text Answers</h5> -->
+
+                      <i class="material-icons heading-icon">short_text</i>
+
+                      <textarea
+                        class="question-statement-input"
+                        placeholder="Write your question here"
+                        rows="1"
+                        onkeyup="SetNewSize(this);"
+                        maxlength="500">
+                      </textarea>
+                    </a>
+
+                    <a
+                      href="#"
+                      style="float: right;color: black;">
+                      <i
+                        class="fas fa-chevron-down"
+                        style="float: right;">
+                      </i>
+                    </a>
+                  </div>
+
+                  <div
+                    class="collapse item-3"
+                    role="tabpanel"
+                    data-parent="#accordion-1">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-xl-8">
+                          <textarea
+                            id="textAnswerArea"
+                            placeholder="Add text here"
+                            style="width: 80%;margin: auto;font-size: 16px;"
+                            maxlength="250"
+                            onkeyup="checkTextAreaMax($(this));">
+                          </textarea>
+                        </div>
+
+                        <div
+                          class="col"
+                          style="padding: 0;">
+                          <p
+                            id="max-chars-input"
+                            class="text-center"
+                            style="margin-bottom: 5px;margin-right: 12px;width: 100%;">
+                            Max # of characters allowed:
+                          </p>
+
+                          <input
+                            class="form-control-range"
+                            min="5"
+                            max="500"
+                            type="range"
+                            style="width: 80%;margin: auto;margin-left: 10%;"
+                            steps="5"
+                            value="120"
+                            oninput="onRangeInput($(this));"/>
+                          <span
+                            id="rangeval"
+                            style="margin-left: 8%;">
+                            120
+                          </span>
+                        </div>
+                      </div>
+
+                      <button
+                        class="btn btn-primary"
+                        type="button"
+                        style="background: #8f9296;color: var(--gray-dark);border-style: none;margin-top: 6px;margin-left: 10px;"
+                        onclick="$(this).closest('.card').remove();">
+                        <i
+                          class="material-icons"
+                          style="font-size: 22px;margin: 0;">
+                          delete
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  id="numeric-question"
+                  class="card"
+                  style="display: none;">
+                  <!-- Numeric question card -->
+
+                  <a
+                    class="question-header-link"
+                    href="#accordion-1 .item-4"
+                    data-toggle="collapse"
+                    aria-expanded="false"
+                    aria-controls="accordion-1 .item-4">
+                  </a>
+
+                  <div
+                    class="card-header"
+                    role="tab"
+                    style="background: rgb(0,123,255);margin: -2px;margin-bottom: -2px;">
+                    <a
+                      data-toggle="collapse"
+                      aria-expanded="false"
+                      aria-controls="accordion-1 .item-4">
+                      <!-- <h5 class="mb-0" style="border-color: var(dark);">Numeric Answer</h5>
+                      -->
+                      <i
+                        class="typcn typcn-sort-numerically"
+                        style="font-size: 20px;margin-right: 4px;">
+                      </i>
+
+                      <textarea
+                        class="question-statement-input"
+                        placeholder="Write your question here"
+                        rows="1"
+                        onkeyup="SetNewSize(this);"
+                        maxlength="500">
+                      </textarea>
+                    </a>
+
+                    <a
+                      href="#"
+                      style="float: right;color: black;">
+                      <i
+                        class="fas fa-chevron-down"
+                        style="float: right;">
+                      </i>
+                    </a>
+                  </div>
+
+                  <div
+                    class="collapse item-4"
+                    role="tabpanel"
+                    data-parent="#accordion-1">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-xl-7">
+                          <p
+                            id="max-chars-input-2"
+                            class="text-center"
+                            style="margin-bottom: 0px;margin-right: 12px;width: 100%;">
+                            Introduce a number:
+                          </p>
+
+                          <input
+                            class="form-control"
+                            type="number"
+                            value="0"
+                            style="height: 50%;margin-top: 5px;"
+                            oninput="checkNumberInputType($(this));"/>
+                          <span
+                            class="invalid-feedback"
+                            style="margin-top: 0px;">
+                            Invalid number
+                          </span>
+
+                          <p
+                            id="max-chars-input-3"
+                            class="text-center"
+                            style="margin-bottom: 0;margin-right: 0;width: 100%;color: var(--gray);font-size: 14px;margin-top: 0px;">
+                            This is how it will look like to the user.
+                          </p>
+                        </div>
+
+                        <div
+                          class="col"
+                          style="padding: 0;">
+                          <p
+                            id="max-chars-input-1"
+                            class="text-center"
+                            style="margin-bottom: 5px;margin-right: 12px;width: 100%;">
+                            Type of number:
+                          </p>
+
+                          <select
+                            class="custom-select"
+                            style="width: 60%;margin-left: 20%;"
+                            oninput="checkNumberInputType($(this).parent().parent().find("input"));">
+                            <option
+                              value="1"
+                              selected>
+                              Any Number
+                            </option>
+
+                            <option value="2">Only Integers</option>
+
+                            <option value="3">Only Positive</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <button
+                        class="btn btn-primary"
+                        type="button"
+                        style="background: #8f9296;color: var(--gray-dark);border-style: none;margin-top: 6px;margin-left: 10px;"
+                        onclick="$(this).closest('.card').remove();">
+                        <i
+                          class="material-icons"
+                          style="font-size: 22px;margin: 0;">
+                          delete
+                        </i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="questions-status"
+            class="row"
+            style="margin-top: 10px;">
+            <!-- Informative text -->
+
+            <div class="col">
+              <div
+                class="text-center"
+                style="margin: 10px;">
+                <p
+                  id="questions-status-txt"
+                  style="color: #363739;opacity: 0.85;">
+                  Questions you add will appear here
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div
+            id="survey-creator-actions"
+            class="row text-right"
+            style="margin-top: 0px;">
+            <div
+              class="col"
+              style="text-align: center;">
+              <div
+                id="question-counter-row"
+                class="row"
+                style="margin-top: 8px;">
+                <div class="col">
+                  <p style="margin: 0;margin-bottom: 5px;font-size: 16px;">0 questions</p>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col">
+                  <div
+                    class="btn-group"
+                    role="group"
+                    style="text-align: center;">
+                    <!-- buttons to create the main 4-types of questions -->
+
+                    <button
+                      class="create-question-btn btn btn-primary hoverable"
+                      type="button"
+                      style="background: #dc3545;"
+                      onclick="newSurveyQuestion(1);">
+                      <!-- Single Choice Answer Question Button -->
+
+                      <i class="material-icons heading-icon">arrow_drop_down_circle</i>
+
+                      Single Choice
+                    </button>
+
+                    <button
+                      class="create-question-btn btn btn-primary hoverable"
+                      type="button"
+                      style="background: #28a745;"
+                      onclick="newSurveyQuestion(2);">
+                      <i class="material-icons heading-icon">format_list_bulleted</i>
+
+                      <!-- Multiple Choice Answer Question Button -->
+
+                      Multiple Choice
+                    </button>
+
+                    <button
+                      class="create-question-btn btn btn-primary hoverable"
+                      type="button"
+                      style="background: #fd7e14;"
+                      onclick="newSurveyQuestion(3);">
+                      <i class="material-icons heading-icon">short_text</i>
+
+                      <!-- Text Answer Question Button -->
+
+                      Text Answer
+                    </button>
+
+                    <button
+                      class="create-question-btn btn btn-primary hoverable"
+                      type="button"
+                      style="background: #007bff;border-color: rgb(40,167,69);"
+                      onclick="newSurveyQuestion(4);">
+                      <!-- Numeric Answer Question Button -->
+
+                      <i
+                        class="typcn typcn-sort-numerically"
+                        style="font-size: 20px;margin-right: 4px;">
+                      </i>
+
+                      Numeric Answer
                     </button>
                   </div>
+                </div>
               </div>
-              <div class="row" id="survey-creator-answers-container">
-                  <div class="col">
-                      <div role="tablist" id="accordion-1">
-            <!-- This are the 4 main cards that are used by the javascript function newSurveyQuestion() to create new ones from these. -->
-                          <div class="card" id="single-choice-question" style="display:none;">
-                        <!-- Single-choice question card -->
-                              <a class="question-header-link" data-toggle="collapse" aria-expanded="true" aria-controls="accordion-1 .item-1" href="#accordion-1 .item-1">
-                                <div class="card-header" role="tab" style="background: rgb(220,53,69);border-width: 3px;border-style: none;margin: -2px;margin-top: -2px;margin-bottom: -2px;" maxlength="250">
-                                    <i class="material-icons" style="text-decoration:none">arrow_drop_down_circle</i>
-                                    <textarea class="question-statement-input" placeholder="Write your question here" rows="1" onkeyup="SetNewSize(this);" maxlength="250"></textarea>
-                                    <!-- <h5 class="mb-0" style="background: #dc3545;border-color: var(dark);">Single Choice</h5> -->
-                                    <a href="#" style="float: right;color: black;">
-                                      <i class="heading-icon fas fa-chevron-down" style="float: right;"></i>
-                                    </a>
-                                </div>
-                              </a>
-                              <div class="collapse show item-1" role="tabpanel" data-parent="#accordion-1">
-                                  <div class="card-body">
-                                      <ul class="list-group list-group-flush single-choice-list" id="singleChoiceList" role="tablist">
-                                          <li class="list-group-item list-group-item-action" id="single-choice-option" style="padding-top: 12px;display:none;">
-                                            <i class="fa fa-circle-thin" style="font-size: 21px;display: inline-block;margin-right: 15px;float: left;margin-top: 5px;">
-                                            </i>
-                                            <textarea style="width: 85%;background: rgba(255,255,255,0);border-style: none;color: inherit;font-size: 15px;" placeholder="Write answer choice" rows="1" onkeyup="SetNewSize(this);" maxlength="250"></textarea>
-                                            <button class="btn btn-primary" id="delete-answer-btn" type="button" style="padding: 6px;padding-bottom: 0px;padding-top: 3px;background: rgba(255,15,0,0);color: inherit;border-style: none;" onclick="$(this).parent().remove();">
-                                              <i class="material-icons" style="font-size: 22px;">delete</i>
-                                            </button>
-                                          </li>
-                                      </ul>
-                                      <button class="btn btn-primary" type="button" style="margin-top: 6px;" onclick="newSingleAnswerOption($(this));">Add Answer</button>
-                                      <button class="btn btn-primary" type="button" style="background: #8f9296;color: var(--gray-dark);border-style: none;margin-top: 6px;margin-left: 10px;" onclick="$(this).closest(&#39;.card&#39;).remove();">
-                                        <i class="material-icons" style="font-size: 22px;margin: 0;">delete</i>
-                                      </button>
-                                  </div>
-                              </div>
-                          </div>
-                          <div class="card" id="multi-choice-question" style="display: none;">
-                    <!-- Multiple-choice question card -->
-                            <a class="question-header-link" data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-2" href="#accordion-1 .item-2" >
-                              <div class="card-header" role="tab" style="background: rgb(40,167,69);color: var(--dark);margin: -2px;margin-bottom: -2px;">
-                                  <!-- <h5 class="mb-0" style="color: var(dark);">  Multiple Choice   </h5>-->
-                                  <i class="material-icons" style="text-decoration:none">format_list_bulleted</i>
-                                  <textarea class="question-statement-input" placeholder="Write your question here" rows="1" onkeyup="SetNewSize(this);" maxlength="500"></textarea>
-                                  <a href="#" style="float: right;color: black;"><i class="fas fa-chevron-down" style="float: right;"></i></a>
-                              </div>
-                            </a>
-                            <div class="collapse item-2" role="tabpanel" data-parent="#accordion-1">
-                                <div class="card-body">
-                                    <ul class="list-group list-group-flush multichoice-list" id="multiChoiceList" role="tablist">
-                                        <li class="list-group-item list-group-item-action" id="multi-choice-option" style="padding-top: 12px;display:none;">
-                                          <i class="fa fa-circle-thin" style="font-size: 21px;display: inline-block;margin-right: 15px;float: left;margin-top: 5px;"></i>
-                                          <textarea style="width: 85%;background: rgba(255,255,255,0);border-style: none;color: inherit;font-size: 16px;" placeholder="Write answer choice" rows="1" onkeyup="SetNewSize(this);" maxlength="250"></textarea>
-                                          <button class="btn btn-primary" id="delete-answer-btn-3" type="button" style="padding: 6px;padding-bottom: 0px;padding-top: 3px;background: rgba(255,15,0,0);border-style: none;color: inherit;" onclick="$(this).parent().remove();">
-                                            <i class="material-icons" style="font-size: 22px;color: inherit;">delete</i>
-                                          </button>
-                                        </li>
-                                    </ul>
-                                    <button class="btn btn-primary" type="button" style="margin-top: 6px;" onclick="newMultiAnswerOption($(this));">Add Answer</button>
-                                    <button class="btn btn-primary" type="button" style="background: #8f9296;color: var(--gray-dark);border-style: none;margin-top: 6px;margin-left: 10px;" onclick="$(this).closest(&#39;.card&#39;).remove();">
-                                      <i class="material-icons" style="font-size: 22px;margin: 0;">delete</i>
-                                    </button>
-                                </div>
-                            </div>
-                          </div>
-                          <div class="card" id="text-question" style="display: none;">
-                    <!-- Text question card -->
-                            <a class="question-header-link" data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-3" href="#accordion-1 .item-3">
-                              <div class="card-header" role="tab" style="background: rgb(253,126,20);margin: -2px;margin-bottom: -2px;">
-                                  <!-- <h5 class="mb-0" style="border-color: var(dark);">Text Answers</h5> -->
-                                <i class="material-icons heading-icon">short_text</i>
-                                <textarea class="question-statement-input" placeholder="Write your question here" rows="1" onkeyup="SetNewSize(this);" maxlength="500"></textarea>
-                                <a href="#" style="float: right;color: black;">
-                                  <i class="fas fa-chevron-down" style="float: right;"></i>
-                                </a>
-                              </div>
-                            </a>
-                            <div class="collapse item-3" role="tabpanel" data-parent="#accordion-1">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-xl-8"><textarea id="textAnswerArea" placeholder="Add text here" style="width: 80%;margin: auto;font-size: 16px;" maxlength="250" onkeyup="checkTextAreaMax($(this));"></textarea></div>
-                                        <div class="col" style="padding: 0;">
-                                            <p class="text-center" id="max-chars-input" style="margin-bottom: 5px;margin-right: 12px;width: 100%;">Max #&nbsp;of characters allowed:</p><input type="range" class="form-control-range" style="width: 80%;margin: auto;margin-left: 10%;" min="5" max="500" steps="5" value="120" oninput="onRangeInput($(this));"><span id="rangeval" style="margin-left: 8%;">120</span>
-                                        </div>
-                                    </div><button class="btn btn-primary" type="button" style="background: #8f9296;color: var(--gray-dark);border-style: none;margin-top: 6px;margin-left: 10px;" onclick="$(this).closest(&#39;.card&#39;).remove();"><i class="material-icons" style="font-size: 22px;margin: 0;">delete</i></button>
-                                </div>
-                            </div>
-                          </div>
-                          <div class="card" id="numeric-question" style="display: none;">
-                    <!-- Numeric question card -->
-                            <a class="question-header-link" data-toggle="collapse" aria-expanded="false" aria-controls="accordion-1 .item-4" href="#accordion-1 .item-4">
-                              <div class="card-header" role="tab" style="background: rgb(0,123,255);margin: -2px;margin-bottom: -2px;">
-                                  <!-- <h5 class="mb-0" style="border-color: var(dark);">Numeric Answer</h5> -->
-                                <i class="typcn typcn-sort-numerically" style="font-size: 20px;margin-right: 4px;"></i>
-                                <textarea class="question-statement-input" placeholder="Write your question here" rows="1" onkeyup="SetNewSize(this);" maxlength="500"></textarea>
-                                <a href="#" style="float: right;color: black;">
-                                  <i class="fas fa-chevron-down" style="float: right;"></i>
-                                </a>
-                              </div>
-                            </a>
-                            <div class="collapse item-4" role="tabpanel" data-parent="#accordion-1">
-                                <div class="card-body">
-                                    <div class="row">
-                                        <div class="col-xl-7">
-                                            <p class="text-center" id="max-chars-input-2" style="margin-bottom: 0px;margin-right: 12px;width: 100%;">Introduce a number:</p><input type="number" class="form-control" value="0" style="height: 50%;margin-top: 5px;" oninput="checkNumberInputType($(this));"><span class="invalid-feedback" style="margin-top: 0px;">Invalid number</span>
-                                            <p class="text-center" id="max-chars-input-3" style="margin-bottom: 0;margin-right: 0;width: 100%;color: var(--gray);font-size: 14px;margin-top: 0px;">This is how it will look like to the user.</p>
-                                        </div>
-                                        <div class="col" style="padding: 0;">
-                                            <p class="text-center" id="max-chars-input-1" style="margin-bottom: 5px;margin-right: 12px;width: 100%;">Type of number:</p><select class="custom-select" style="width: 60%;margin-left: 20%;" oninput="checkNumberInputType($(this).parent().parent().find(&quot;input&quot;));">
-                                                <option value="1" selected="">Any Number</option>
-                                                <option value="2">Only Integers</option>
-                                                <option value="3">Only Positive</option>
-                                            </select>
-                                        </div>
-                                    </div><button class="btn btn-primary" type="button" style="background: #8f9296;color: var(--gray-dark);border-style: none;margin-top: 6px;margin-left: 10px;" onclick="$(this).closest(&#39;.card&#39;).remove();"><i class="material-icons" style="font-size: 22px;margin: 0;">delete</i></button>
-                                </div>
-                            </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="row" id="questions-status" style="margin-top: 10px;">
-                <!-- Informative text -->
-                  <div class="col">
-                      <div class="text-center" style="margin: 10px;">
-                          <p id="questions-status-txt" style="color: #363739;opacity: 0.85;">Questions you add will appear here</p>
-                      </div>
-                  </div>
-              </div>
-              <div class="row text-right" id="survey-creator-actions" style="margin-top: 0px;">
-                  <div class="col" style="text-align: center;">
-                      <div class="row" id="question-counter-row" style="margin-top: 8px;">
-                          <div class="col">
-                              <p style="margin: 0;margin-bottom: 5px;font-size: 16px;">0 questions</p>
-                          </div>
-                      </div>
-                      <div class="row">
-                          <div class="col">
-                              <div class="btn-group" role="group" style="text-align: center;">
-                            <!-- buttons to create the main 4-types of questions -->
-                                <button class="create-question-btn btn btn-primary hoverable" type="button" style="background: #dc3545;"
-                                onclick="newSurveyQuestion(1);">
-                                <!-- Single Choice Answer Question Button -->
-                                  <i class="material-icons heading-icon">arrow_drop_down_circle</i>
-                                  Single Choice
-                                </button>
-                                <button class="create-question-btn btn btn-primary hoverable" type="button" style="background: #28a745;" onclick="newSurveyQuestion(2);">
-                                  <i class="material-icons heading-icon">format_list_bulleted</i>
-                                <!-- Multiple Choice Answer Question Button -->
-                                  Multiple Choice
-                                </button>
-                                <button class="create-question-btn btn btn-primary hoverable" type="button" style="background: #fd7e14;" onclick="newSurveyQuestion(3);">
-                                  <i class="material-icons heading-icon">short_text</i>
-                                <!-- Text Answer Question Button -->
-                                  Text Answer
-                                </button>
-                                <button class="create-question-btn btn btn-primary hoverable" type="button" style="background: #007bff;border-color: rgb(40,167,69);" onclick="newSurveyQuestion(4);">
-                                <!-- Numeric Answer Question Button -->
-                                  <i class="typcn typcn-sort-numerically" style="font-size: 20px;margin-right: 4px;"></i>
-                                  Numeric Answer
-                                </button></div>
-                          </div>
-                      </div>
-                      <div class="row" style="margin-top: 8px;">
-                        <!-- Informative text -->
-                          <div class="col">
-                              <p class="text-monospace" style="margin: 0;margin-bottom: 5px;font-size: 13px;">Spice things up! Add questions to your survey by selecting the type of answer above</p>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-        </form>
-      </div>
 
+              <div
+                class="row"
+                style="margin-top: 8px;">
+                <!-- Informative text -->
+
+                <div class="col">
+                  <p
+                    class="text-monospace"
+                    style="margin: 0;margin-bottom: 5px;font-size: 13px;">
+                    Spice things up! Add questions to your survey by selecting the type of answer
+                    above
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
+
 <!-- Floating button to show survey panel -->
+
 <div class="create_survey-btn fixed-action-btn">
-  <a id="new_survey_a" class="btn-floating btn-large hoverable blue darken-3" href="#"> <!--pulse-->
-    <i id = "create_survey_icon" class="large material-icons">poll</i>
+  <a
+    id="new_survey_a"
+    class="btn-floating btn-large hoverable blue darken-3"
+    href="#">
+    <!-- pulse -->
+
+    <i
+      id="create_survey_icon"
+      class="large material-icons">
+      poll
+    </i>
   </a>
-  <!-- <ul>
-    <li><a class="btn-floating red"><i class="material-icons">mode_edit</i></a></li>
-    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>
-  </ul> -->
+
+  <!--
+    <ul>     <li><a class="btn-floating red"><i class="material-icons">mode_edit</i></a></li>
+    <li><a class="btn-floating blue"><i class="material-icons">attach_file</i></a></li>   </ul>
+  -->
 </div>
-{% endblock %}
-{% block javascript %}
-  <script src="{{url_for('static', filename='js/createsurvey.js')}}"></script>
+
+{% endblock %} {% block javascript %}
+
+<script src="{{url_for('static', filename='js/createsurvey.js')}}"></script>
+
 {% endblock %}

@@ -85,7 +85,7 @@ def create_new_survey():
     return redirect(request.referrer)#url_for("main.index")
 
 
-@bp.route("/survey/<int:survey_uri>",methods=["POST"])
+@bp.route("/survey/<int:survey_uri>",methods=["GET"])
 @flask_login.login_required
 def survey(survey_uri):
     survey = model.Survey.query.filter_by(id=survey_uri).first_or_404()
@@ -93,7 +93,19 @@ def survey(survey_uri):
         print("Survey is closed at the moment.")
         abort(403)
 
-    render_template("templates/survey_response_template.html",survey=survey)
+    survey_questions = model.Question.query.filter_by(survey_id=survey.id).order_by(model.Question.position.desc()).all()
+    question_choices = []
+    for question in survey_questions:
+        choices = model.Choice.query.filter_by(question_id=question.id).all()
+        question_choices.append(choices)
+    print(survey_questions)
+    return render_template("main/fillsurvey.html",survey=survey,questions=survey_questions,choices=question_choices)
+
+@bp.route("/survey/<int:survey_uri>",methods=["POST"])
+@flask_login.login_required
+def survey_answer(survey_uri):
+    print(request.get_json())
+    return redirect(url_for("main.index"))
 
 
 @bp.route("/change_survey_state/<int:survey_id>",methods=["GET","POST"])
