@@ -129,6 +129,9 @@ def account():
     return render_template('auth/account.html',image = image,form = updated_form)
 
 
+
+
+# This function route would be the function that we would use todownload the questions answers in CSV format.
 @bp.route('/download_questions_answers',methods = ['GET','POST'])
 @login_required
 def download():
@@ -150,6 +153,34 @@ def download():
     writer = csv.writer(proxy)
     for i in row:
         writer.writerow(i)
+
+    # Creating the byteIO object from the StringIO Object
+    mem = io.BytesIO()
+    mem.write(proxy.getvalue().encode('utf-8'))
+    # seeking was necessary. Python 3.5.2, Flask 0.12.2
+    mem.seek(0)
+
+    return send_file(
+        mem,
+        mimetype='text/csv'
+    )
+
+
+# For you to checked that our program to download content in CSV works, we have implemented this function
+# If already logged in and types the http://127.0.0.1:5000/download, you get a csv file ready to download_questions_answers
+# that contains all the users in the database.
+@bp.route('/download')
+@login_required
+def download():
+    users = model.User.query.all()
+    row = []
+    for example in users:
+        row.append((example.name,example.email,example.id))
+    proxy = io.StringIO()
+
+    writer = csv.writer(proxy)
+    for i in row:
+        writer.writerow(i)s
 
     # Creating the byteIO object from the StringIO Object
     mem = io.BytesIO()
